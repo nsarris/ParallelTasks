@@ -19,7 +19,7 @@ pr:
     - README.md
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   isRelease: False
@@ -43,7 +43,12 @@ variables:
     isAlphaRelease: False
 
 steps:
-- script: |
+
+- task: Bash@3
+  displayName: 'Get Version from version.props'
+  inputs:
+    targetType: 'inline'
+    script: |
       PROJECT_VERSION_PREFIX="$(grep '<VersionPrefix>' < version.props | sed 's/.*<VersionPrefix>\(.*\)<\/VersionPrefix>/\1/')"
       PROJECT_VERSION_SUFFIX="$(grep '<VersionSuffix>' < version.props | sed 's/.*<VersionSuffix>\(.*\)<\/VersionSuffix>/\1/')"
       echo "##vso[task.setvariable variable=projectVersionPrefix]$PROJECT_VERSION_PREFIX"
@@ -60,21 +65,23 @@ steps:
         echo "##vso[task.setvariable variable=projectVersionSuffix]alpha-$(Build.BuildNumber)"
         echo "##vso[task.setvariable variable=projectVersion]$PROJECT_VERSION_PREFIX-alpha-$(Build.BuildNumber)"
       fi
-
-  displayName: 'Get Version from version.props'
-
-- script: |
-    echo "Source Branch: $(Build.SourceBranch)"
-    echo "Is Pull Request: $(isPullRequest)"
-    [ "$(isPullRequest)" == "True" ] && echo "Pull Request Source: $(System.PullRequest.SourceBranch)" && echo "Pull Request Target: $(System.PullRequest.TargetBranch)"
-    echo "Release Build: $(releaseBuild)"
-    echo "Stable release: $(isRelease)"
-    echo "Prerelease: $(isPrerelease)"
-    echo "Alpha: $(isAlphaRelease)"
-    echo "Build Configuration: $(buildConfiguration)"
-    echo "Build Version: $(projectVersion)"
+  
+- task: Bash@3
   condition: true
   displayName: 'Log pipeline configuration'
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Source Branch: $(Build.SourceBranch)"
+      echo "Is Pull Request: $(isPullRequest)"
+      [ "$(isPullRequest)" == "True" ] && echo "Pull Request Source: $(System.PullRequest.SourceBranch)" && echo "Pull Request Target: $(System.PullRequest.TargetBranch)"
+      echo "Release Build: $(releaseBuild)"
+      echo "Stable release: $(isRelease)"
+      echo "Prerelease: $(isPrerelease)"
+      echo "Alpha: $(isAlphaRelease)"
+      echo "Build Configuration: $(buildConfiguration)"
+      echo "Build Version: $(projectVersion)"
+  
 
 - task: DotNetCoreCLI@2
   inputs:
