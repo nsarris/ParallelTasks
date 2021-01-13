@@ -146,7 +146,7 @@ steps:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'internal'
-    publishVstsFeed: 'd28ddf80-d960-4000-806a-ea62ac4ea474'
+    publishVstsFeed: 'bc5bf24a-2311-4ad8-8d83-9722ab706348'
     allowPackageConflicts: true
 
 - task: NuGetCommand@2
