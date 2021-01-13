@@ -1,0 +1,62 @@
+﻿﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="Shared.ttinclude"#>
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.CodeDom.Compiler;
+
+namespace ParallelTasks
+{
+<# for (var i = 2; i <= numOfGenericParameters; i++) { 
+	var generics = string.Join(", ",Enumerable.Range(1, i).Select(x => "T" + x));
+	var ctorArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"ITaskResult<T{x}> result{x}"));
+	var listArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"result{x}"));
+    var initArgs = string.Join(Environment.NewLine + "\t\t\t",Enumerable.Range(1, i).Select(x => $"Result{x} = result{x};")); 
+    var props = string.Join(Environment.NewLine + "\t\t",Enumerable.Range(1, i).Select(x => $"public ITaskResult<T{x}> Result{x} {{ get; }}")); 
+    var tupleArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"ITaskResult<T{x}>"));
+    var tupleValues = string.Join(", ",Enumerable.Range(1, i).Select(x => $"Result{x}"));
+    var tupleResultValues = string.Join(", ",Enumerable.Range(1, i).Select(x => $"Result{x}.Value"));
+    var propsEqualValues = string.Join(", ",Enumerable.Range(1, i).Select(x => $"(ITaskResult<T{x}>)indexedResults[{x-1}]")); 
+	#>
+    <#= generatedCodeAttribute #>
+    public class TaskResults<<#= generics #>> : IEnumerable<ITaskResult>
+    {
+		private readonly IEnumerable<ITaskResult> results;
+        
+        public TaskResults(<#= ctorArgs #>)
+        {
+            <#= initArgs #>
+
+			results = new ITaskResult[] { <#= listArgs #> };
+        }
+
+		
+		public bool AllCompletedSuccessfully => results.AllCompletedSuccessfully();
+
+        <#= props #>
+
+        public (<#= tupleArgs #>) AsTuple()
+            => (<#= tupleValues #>);
+
+        public (<#= generics #>) AsTupleOfValues()
+            => (<#= tupleResultValues #>);
+
+        internal static TaskResults<<#= generics #>> FromResults(IEnumerable<ITaskResult> results)
+        {
+            if (!(results is IList<ITaskResult> indexedResults))
+                indexedResults = results.ToList();
+
+            return new TaskResults<<#= generics #>>(<#= propsEqualValues #>);
+        }
+
+        public IEnumerator<ITaskResult> GetEnumerator() => results.GetEnumerator();
+        
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+<# } #>
+}

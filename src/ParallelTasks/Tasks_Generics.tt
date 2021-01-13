@@ -1,0 +1,115 @@
+﻿﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="Shared.ttinclude"#>
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.CodeDom.Compiler;
+
+namespace ParallelTasks
+{
+    public static partial class Tasks
+    {
+<# for (var i = 2; i <= numOfGenericParameters; i++) { 
+	var generics = string.Join(", ",Enumerable.Range(1, i).Select(x => "T" + x));
+	var taskArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"Task<T{x}> task{x}"));
+	var namedTaskArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"(string name, Task<T{x}> task) task{x}"));
+	var taskFactoryArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"Func<Task<T{x}>> task{x}")); 
+	var namedTaskFactoryArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"(string name, Func<Task<T{x}>> task) task{x}")); 
+	var taskFactoryArgsWithCancellation = string.Join(", ",Enumerable.Range(1, i).Select(x => $"Func<CancellationToken, Task<T{x}>> task{x}")); 
+	var namedTaskFactoryArgsWithCancellation = string.Join(", ",Enumerable.Range(1, i).Select(x => $"(string name, Func<CancellationToken, Task<T{x}>> operation) task{x}")); 
+	var castedTasks = string.Join(", ",Enumerable.Range(1, i).Select(x => $"task{x}.AsTask()")); 
+	#>
+		<#= generatedCodeAttribute #>
+		public static Task<TaskResults<<#= generics #>>> WhenAll<<#= generics #>>(<#= taskArgs #>)
+			=> Tasks.WhenAll(<#= castedTasks #>)
+				.ContinueWith(x => 
+					TaskResults<<#= generics #>>.FromResults(x.Result));
+		
+		<#= generatedCodeAttribute #>
+		public static Task<TaskResults<<#= generics #>>> WhenAll<<#= generics #>>(<#= namedTaskArgs #>)
+			=> Tasks.WhenAll(<#= castedTasks #>)
+				.ContinueWith(x => 
+					TaskResults<<#= generics #>>.FromResults(x.Result));
+
+		<#= generatedCodeAttribute #>
+		public static Task<TaskResults<<#= generics #>>> WhenAll<<#= generics #>>(<#= taskFactoryArgs #>)
+			=> Tasks.WhenAll(<#= castedTasks #>)
+				.ContinueWith(x => 
+					TaskResults<<#= generics #>>.FromResults(x.Result));
+
+		<#= generatedCodeAttribute #>
+		public static Task<TaskResults<<#= generics #>>> WhenAll<<#= generics #>>(<#= namedTaskFactoryArgs #>)
+			=> Tasks.WhenAll(<#= castedTasks #>)
+				.ContinueWith(x => 
+					TaskResults<<#= generics #>>.FromResults(x.Result));
+
+		<#= generatedCodeAttribute #>
+		public static Task<TaskResults<<#= generics #>>> WhenAll<<#= generics #>>(<#= taskFactoryArgsWithCancellation #>, CancellationToken cancellationToken)
+			=> Tasks.WhenAll(cancellationToken, <#= castedTasks #>)
+				.ContinueWith(x => 
+					TaskResults<<#= generics #>>.FromResults(x.Result));
+
+		<#= generatedCodeAttribute #>
+		public static Task<TaskResults<<#= generics #>>> WhenAll<<#= generics #>>(<#= namedTaskFactoryArgsWithCancellation #>, CancellationToken cancellationToken)
+			=> Tasks.WhenAll(cancellationToken, <#= castedTasks #>)
+				.ContinueWith(x => 
+					TaskResults<<#= generics #>>.FromResults(x.Result));
+
+		<#= generatedCodeAttribute #>
+		public static Task<ITaskResult> WhenAny<<#= generics #>>(<#= taskArgs #>)
+			=> Tasks.WhenAny(<#= castedTasks #>);
+		
+		<#= generatedCodeAttribute #>
+		public static Task<ITaskResult> WhenAny<<#= generics #>>(<#= namedTaskArgs #>)
+			=> Tasks.WhenAny(<#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static Task<ITaskResult> WhenAny<<#= generics #>>(<#= taskFactoryArgs #>)
+			=> Tasks.WhenAny(<#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static Task<ITaskResult> WhenAny<<#= generics #>>(<#= namedTaskFactoryArgs #>)
+			=> Tasks.WhenAny(<#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static Task<ITaskResult> WhenAny<<#= generics #>>(<#= taskFactoryArgsWithCancellation #>, CancellationToken cancellationToken)
+			=> Tasks.WhenAny(cancellationToken, <#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static Task<ITaskResult> WhenAny<<#= generics #>>(<#= namedTaskFactoryArgsWithCancellation #>, CancellationToken cancellationToken)
+			=> Tasks.WhenAny(cancellationToken, <#= castedTasks #>);
+
+#if NETSTANDARD2_PLUS
+		<#= generatedCodeAttribute #>
+		public static IAsyncEnumerable<ITaskResult> WhenEach<<#= generics #>>(<#= taskArgs #>)
+			=> Tasks.WhenEach(<#= castedTasks #>);
+		
+		<#= generatedCodeAttribute #>
+		public static IAsyncEnumerable<ITaskResult> WhenEach<<#= generics #>>(<#= namedTaskArgs #>)
+			=> Tasks.WhenEach(<#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static IAsyncEnumerable<ITaskResult> WhenEach<<#= generics #>>(<#= taskFactoryArgs #>)
+			=> Tasks.WhenEach(<#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static IAsyncEnumerable<ITaskResult> WhenEach<<#= generics #>>(<#= namedTaskFactoryArgs #>)
+			=> Tasks.WhenEach(<#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static IAsyncEnumerable<ITaskResult> WhenEach<<#= generics #>>(<#= taskFactoryArgsWithCancellation #>, CancellationToken cancellationToken)
+			=> Tasks.WhenEach(cancellationToken, <#= castedTasks #>);
+
+		<#= generatedCodeAttribute #>
+		public static IAsyncEnumerable<ITaskResult> WhenEach<<#= generics #>>(<#= namedTaskFactoryArgsWithCancellation #>, CancellationToken cancellationToken)
+			=> Tasks.WhenEach(cancellationToken, <#= castedTasks #>);
+#endif
+
+<# } #>
+    }
+}

@@ -1,0 +1,4 @@
+﻿<# var numOfGenericParameters = 20; #>
+<# var codeGenerationTool = "Microsoft.VisualStudio.TextTemplating"; #>
+<# var codeGenerationToolVersion = typeof(Microsoft.VisualStudio.TextTemplating.Engine).Assembly.GetName().Version.ToString(); #>
+<# var generatedCodeAttribute = $"[GeneratedCode(\"{codeGenerationTool}\", \"{codeGenerationToolVersion}\")]"; #>
