@@ -35,7 +35,7 @@ namespace ParallelTasks.Tests
             stringResultValue.Should().Be(stringValue);
             dateResultValue.Should().Be(dateTimeValue);
             boolResultValue.Should().Be(boolValue);
-
+            
             //Decompose as tuple of TaskResults
             var (intResult, stringResult, dateResult, boolResult) = result.AsTuple();
 

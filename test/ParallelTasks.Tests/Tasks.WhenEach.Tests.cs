@@ -35,12 +35,12 @@ namespace ParallelTasks.Tests
                     result.ShouldBeCompleted();
                     result.ShouldHaveResult(stringValue);
                 }
-                if (result.Index == 2)
+                else if (result.Index == 2)
                 {
                     result.ShouldBeCompleted();
                     result.ShouldHaveResult(dateTimeValue);
                 }
-                if (result.Index == 3)
+                else if (result.Index == 3)
                 {
                     result.ShouldBeCompleted();
                     result.ShouldHaveResult(boolValue);
@@ -71,19 +71,19 @@ namespace ParallelTasks.Tests
                     result.ShouldHaveResult(intValue);
                     result.ShouldMatch("intTask", 0);
                 }
-                if (result.Name == "stringTask")
+                else if (result.Name == "stringTask")
                 {
                     result.ShouldBeCompleted();
                     result.ShouldHaveResult(stringValue);
                     result.ShouldMatch("stringTask", 1);
                 }
-                if (result.Name == "dateTask")
+                else if (result.Name == "dateTask")
                 {
                     result.ShouldBeCompleted();
                     result.ShouldHaveResult(dateTimeValue);
                     result.ShouldMatch("dateTask", 2);
                 }
-                if (result.Name == "boolTask")
+                else if (result.Name == "boolTask")
                 {
                     result.ShouldBeCompleted();
                     result.ShouldHaveResult(boolValue);
@@ -115,17 +115,17 @@ namespace ParallelTasks.Tests
                     result.ShouldHaveResult(intValue);
                     result.ShouldMatch("intTask", 0);
                 }
-                if (result.Name == "stringTask")
+                else if (result.Name == "stringTask")
                 {
                     result.ShouldBeFaulted<AwaitableException>();
                     result.ShouldMatch("stringTask", 1);
                 }
-                if (result.Name == "dateTask")
+                else if (result.Name == "dateTask")
                 {
                     result.ShouldBeCanceled();
                     result.ShouldMatch("dateTask", 2);
                 }
-                if (result.Name == "boolTask")
+                else if (result.Name == "boolTask")
                 {
                     result.ShouldBeCompleted();
                     result.ShouldHaveResult(boolValue);

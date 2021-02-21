@@ -458,7 +458,7 @@ namespace ParallelTasks
         public static IAsyncEnumerable<ITaskResult<T>> WhenEach<T>(params Func<Task<T>>[] tasks)
             => WhenEach(tasks.AsEnumerable());
 
-        public static IAsyncEnumerable<ITaskResult<T>> WhenWhenEachAll<T>(params (string name, Func<Task<T>> createTask)[] tasks)
+        public static IAsyncEnumerable<ITaskResult<T>> WhenEach<T>(params (string name, Func<Task<T>> createTask)[] tasks)
             => WhenEach(tasks.AsEnumerable(), 0);
 
         public static IAsyncEnumerable<ITaskResult<T>> WhenEach<T>(CancellationToken cancellationToken, params Func<CancellationToken, Task<T>>[] tasks)

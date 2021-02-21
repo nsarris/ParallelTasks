@@ -39,7 +39,7 @@ namespace ParallelTasks.Tests
             var source = new (string name, int value)[] { ("name1", 1), ("name2", 3), ("name3", 5) };
 
             static string operation(int value) => (value + 1).ToString();
-
+            
             //Asynchronously iterate results
             await foreach (var r in source.WhenEach(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask)))
             {
