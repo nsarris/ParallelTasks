@@ -18,7 +18,7 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, 0);
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, 0);
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace ParallelTasks
         /// <param name="source">The enumerable collection of source elements.</param>
         /// <param name="operation">The operation to apply on each element.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, 0);
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace ParallelTasks
         /// <param name="source">The enumerable collection of source elements.</param>
         /// <param name="operation">The operation to apply on each element.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, 0);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, 0);
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, 0);
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace ParallelTasks
         /// <param name="source">The enumerable collection of named source elements represented as a (string, TSource) Tuple.</param>
         /// <param name="operation">The operation to apply on each element.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, 0);
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace ParallelTasks
         /// <param name="source">The enumerable collection of source elements.</param>
         /// <param name="operation">The operation to apply on each element.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, 0);
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace ParallelTasks
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, degreeOfParallelism);
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace ParallelTasks
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, degreeOfParallelism);
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, degreeOfParallelism);
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, degreeOfParallelism);
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace ParallelTasks
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, degreeOfParallelism);
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace ParallelTasks
         /// <param name="cancellationToken">The cancellation token that is passed to each operation.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(cancellationToken, degreeOfParallelism);
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAll<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource, TResult>>> WhenAllAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, degreeOfParallelism);
 
         /// <summary>
@@ -190,35 +190,35 @@ namespace ParallelTasks
         /// <param name="operation">The operation to apply on each element.</param>
         /// <param name="degreeOfParallelism">The maxium number of concurrently executed parallel tasks.</param>
         /// <returns>Task of ISourcedTaskResult items, one for each input element.</returns>
-        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAll<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation, int degreeOfParallelism)
+        public static Task<IEnumerable<ISourcedTaskResult<TSource>>> WhenAllAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenAll(CancellationToken.None, degreeOfParallelism);
 
         #endregion
 
         #region WhenAny
 
-        public static Task<ISourcedTaskResult<TSource>> WhenAny<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
+        public static Task<ISourcedTaskResult<TSource>> WhenAnyAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAny(cancellationToken);
 
-        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAny<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
+        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAnyAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAny(cancellationToken);
 
-        public static Task<ISourcedTaskResult<TSource>> WhenAny<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation)
+        public static Task<ISourcedTaskResult<TSource>> WhenAnyAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation)
             => source.ToNamedTaskFactories(operation).WhenAny(CancellationToken.None);
 
-        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAny<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation)
+        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAnyAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation)
             => source.ToNamedTaskFactories(operation).WhenAny(CancellationToken.None);
 
-        public static Task<ISourcedTaskResult<TSource>> WhenAny<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
+        public static Task<ISourcedTaskResult<TSource>> WhenAnyAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAny(cancellationToken);
 
-        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAny<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
+        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAnyAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenAny(cancellationToken);
 
-        public static Task<ISourcedTaskResult<TSource>> WhenAny<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation)
+        public static Task<ISourcedTaskResult<TSource>> WhenAnyAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation)
             => source.ToNamedTaskFactories(operation).WhenAny(CancellationToken.None);
 
-        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAny<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation)
+        public static Task<ISourcedTaskResult<TSource, TResult>> WhenAnyAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation)
             => source.ToNamedTaskFactories(operation).WhenAny(CancellationToken.None);
 
         #endregion
@@ -227,52 +227,52 @@ namespace ParallelTasks
 
 #if NETSTANDARD2_PLUS
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, 0);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, degreeOfParallelism);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, degreeOfParallelism);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<TSource> source, Func<TSource, Task> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, degreeOfParallelism);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, degreeOfParallelism);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, degreeOfParallelism);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(cancellationToken, degreeOfParallelism);
         
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEach<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource>> WhenEachAsync<TSource>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, degreeOfParallelism);
 
-        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEach<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
+        public static IAsyncEnumerable<ISourcedTaskResult<TSource, TResult>> WhenEachAsync<TSource, TResult>(this IEnumerable<(string name, TSource value)> source, Func<TSource, Task<TResult>> operation, int degreeOfParallelism)
             => source.ToNamedTaskFactories(operation).WhenEach(CancellationToken.None, degreeOfParallelism);
 
 #endif

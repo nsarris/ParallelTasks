@@ -12,7 +12,7 @@ namespace ParallelTasks
         /// <param name="taskResults">The enumeration of ITaskResults.</param>
         /// <returns>True if all tasks completed succesfully, othrewise false</returns>
         public static bool AllCompletedSuccessfully(this IEnumerable<ITaskResult> taskResults)
-            => !taskResults.Any(x => x.IsCanceled || x.IsFaulted);
+            => !taskResults.Any(x => !x.IsCompleted);
 
         /// <summary>
         /// Check if all results in a collection have been canceled or failed. 
@@ -31,6 +31,30 @@ namespace ParallelTasks
             => taskResults.Where(x => x.IsFaulted);
 
         /// <summary>
+        /// Gets all the failed results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed results.</returns>
+        public static IEnumerable<ITaskResult<T>> GetFailed<T>(this IEnumerable<ITaskResult<T>> taskResults)
+            => taskResults.Where(x => x.IsFaulted);
+
+        /// <summary>
+        /// Gets all the failed results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed results.</returns>
+        public static IEnumerable<ISourcedTaskResult<T>> GetFailed<T>(this IEnumerable<ISourcedTaskResult<T>> taskResults)
+            => taskResults.Where(x => x.IsFaulted);
+
+        /// <summary>
+        /// Gets all the failed results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed results.</returns>
+        public static IEnumerable<ISourcedTaskResult<TSource, TResult>> GetFailed<TSource, TResult>(this IEnumerable<ISourcedTaskResult<TSource, TResult>> taskResults)
+            => taskResults.Where(x => x.IsFaulted);
+
+        /// <summary>
         /// Gets all the canceled results in an enumeration. 
         /// </summary>
         /// <param name="taskResults">The enumeration of ITaskResults.</param>
@@ -39,12 +63,60 @@ namespace ParallelTasks
             => taskResults.Where(x => x.IsCanceled);
 
         /// <summary>
+        /// Gets all the canceled results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of canceled results.</returns>
+        public static IEnumerable<ITaskResult<T>> GetCanceled<T>(this IEnumerable<ITaskResult<T>> taskResults)
+            => taskResults.Where(x => x.IsCanceled);
+
+        /// <summary>
+        /// Gets all the canceled results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of canceled results.</returns>
+        public static IEnumerable<ISourcedTaskResult<T>> GetCanceled<T>(this IEnumerable<ISourcedTaskResult<T>> taskResults)
+            => taskResults.Where(x => x.IsCanceled);
+
+        /// <summary>
+        /// Gets all the canceled results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of canceled results.</returns>
+        public static IEnumerable<ISourcedTaskResult<TSource, TResult>> GetCanceled<TSource, TResult>(this IEnumerable<ISourcedTaskResult<TSource, TResult>> taskResults)
+            => taskResults.Where(x => x.IsCanceled);
+
+        /// <summary>
         /// Gets all the failed or canceled results in an enumeration. 
         /// </summary>
         /// <param name="taskResults">The enumeration of ITaskResults.</param>
         /// <returns>An enumeration of failed or canceled results.</returns>
         public static IEnumerable<ITaskResult> GetFailedOrCanceled(this IEnumerable<ITaskResult> taskResults)
-            => taskResults.Where(x => x.IsFaulted || x.IsCanceled);
+            => taskResults.Where(x => !x.IsCompleted);
+
+        /// <summary>
+        /// Gets all the failed or canceled results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed or canceled results.</returns>
+        public static IEnumerable<ITaskResult<T>> GetFailedOrCanceled<T>(this IEnumerable<ITaskResult<T>> taskResults)
+            => taskResults.Where(x => !x.IsCompleted);
+
+        /// <summary>
+        /// Gets all the failed or canceled results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed or canceled results.</returns>
+        public static IEnumerable<ISourcedTaskResult<T>> GetFailedOrCanceled<T>(this IEnumerable<ISourcedTaskResult<T>> taskResults)
+            => taskResults.Where(x => !x.IsCompleted);
+
+        /// <summary>
+        /// Gets all the failed or canceled results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed or canceled results.</returns>
+        public static IEnumerable<ISourcedTaskResult<TSource, TResult>> GetFailedOrCanceled<TSource, TResult>(this IEnumerable<ISourcedTaskResult<TSource, TResult>> taskResults)
+            => taskResults.Where(x => !x.IsCompleted);
 
         /// <summary>
         /// Gets all the succesfull results in an enumeration. 
@@ -52,6 +124,30 @@ namespace ParallelTasks
         /// <param name="taskResults">The enumeration of ITaskResults.</param>
         /// <returns>An enumeration of failed or canceled results.</returns>
         public static IEnumerable<ITaskResult> GetSuccessfull(this IEnumerable<ITaskResult> taskResults)
+            => taskResults.Where(x => x.IsCompleted);
+
+        /// <summary>
+        /// Gets all the succesfull results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed or canceled results.</returns>
+        public static IEnumerable<ITaskResult<T>> GetSuccessfull<T>(this IEnumerable<ITaskResult<T>> taskResults)
+            => taskResults.Where(x => x.IsCompleted);
+
+        /// <summary>
+        /// Gets all the succesfull results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed or canceled results.</returns>
+        public static IEnumerable<ISourcedTaskResult<T>> GetSuccessfull<T>(this IEnumerable<ISourcedTaskResult<T>> taskResults)
+            => taskResults.Where(x => x.IsCompleted);
+
+        /// <summary>
+        /// Gets all the succesfull results in an enumeration. 
+        /// </summary>
+        /// <param name="taskResults">The enumeration of ITaskResults.</param>
+        /// <returns>An enumeration of failed or canceled results.</returns>
+        public static IEnumerable<ISourcedTaskResult<TSource, TResult>> GetSuccessfull<TSource, TResult>(this IEnumerable<ISourcedTaskResult<TSource, TResult>> taskResults)
             => taskResults.Where(x => x.IsCompleted);
 
         /// <summary>
