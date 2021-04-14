@@ -20,7 +20,7 @@ namespace ParallelTasks.Tests
             static string operation(int value) => (value + 1).ToString();
 
             //Get a collection of TaskResults
-            var results = await source.WhenAll(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask));
+            var results = await source.WhenAllAsync(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask));
 
             foreach(var r in source.Zip(results, (sourceValue, result) => new { sourceValue, result }).Select((x,i) => new { x.sourceValue, x.result, index = i }))
             {
@@ -41,8 +41,8 @@ namespace ParallelTasks.Tests
             static string operation(int value) => (value + 1).ToString();
 
             //Get a collection of TaskResults
-            var results = await source.WhenAll(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask));
-
+            var results = await source.WhenAllAsync(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask));
+            
             foreach (var r in source.Zip(results, (sourceValue, result) => new { sourceValue, result }).Select((x, i) => new { x.sourceValue, x.result, index = i }))
             {
                 r.result.ShouldBeCompleted();

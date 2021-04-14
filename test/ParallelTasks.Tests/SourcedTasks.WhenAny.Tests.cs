@@ -18,7 +18,7 @@ namespace ParallelTasks.Tests
             var source = new[] { 1, 3, 5 };
 
             //Get a random result
-            var result = await source.WhenAny(x => TestClass.TestMethod(x, simulateTask: simulateTask));
+            var result = await source.WhenAnyAsync(x => TestClass.TestMethod(x, simulateTask: simulateTask));
 
             result.ShouldBeCompleted();
             result.ShouldHaveResult(result.Source);
@@ -33,7 +33,7 @@ namespace ParallelTasks.Tests
             var source = new (string name, int value)[] { ("1", 1), ("3", 3), ("5", 5) };
 
             //Get a random result
-            var result = await source.WhenAny((int x) => TestClass.TestMethod(x, simulateTask: simulateTask));
+            var result = await source.WhenAnyAsync((int x) => TestClass.TestMethod(x, simulateTask: simulateTask));
 
             result.ShouldBeCompleted();
             result.ShouldHaveResult(result.Source);

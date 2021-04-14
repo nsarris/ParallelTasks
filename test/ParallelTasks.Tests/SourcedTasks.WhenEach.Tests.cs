@@ -20,7 +20,7 @@ namespace ParallelTasks.Tests
             static string operation(int value) => (value + 1).ToString();
 
             //Asynchronously iterate results
-            await foreach (var r in source.WhenEach(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask)))
+            await foreach (var r in source.WhenEachAsync(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask)))
             {
                 var sourceValue = source[r.Index.Value];
 
@@ -41,7 +41,7 @@ namespace ParallelTasks.Tests
             static string operation(int value) => (value + 1).ToString();
             
             //Asynchronously iterate results
-            await foreach (var r in source.WhenEach(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask)))
+            await foreach (var r in source.WhenEachAsync(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask)))
             {
                 var sourceValue = source[r.Index.Value].value;
                 var sourceName = source[r.Index.Value].name;
