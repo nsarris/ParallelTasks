@@ -18,11 +18,11 @@ namespace ParallelTasks
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
 
-            if (tasks.Count == degreeOfParallelism)
+            if (tasks.Count < degreeOfParallelism || degreeOfParallelism < 1)
                 return await Task.WhenAll(tasks).AsEnumerable().ConfigureAwait(false);
 
             var queue = taskFactories
@@ -51,11 +51,11 @@ namespace ParallelTasks
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
 
-            if (tasks.Count == degreeOfParallelism)
+            if (tasks.Count < degreeOfParallelism || degreeOfParallelism < 1)
                 return await Task.WhenAll(tasks).AsEnumerable().ConfigureAwait(false);
 
             var queue = taskFactories
@@ -84,11 +84,11 @@ namespace ParallelTasks
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
 
-            if (tasks.Count == degreeOfParallelism)
+            if (tasks.Count < degreeOfParallelism || degreeOfParallelism < 1)
                 return await Task.WhenAll(tasks).AsEnumerable().ConfigureAwait(false);
 
             var queue = taskFactories
@@ -117,11 +117,11 @@ namespace ParallelTasks
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
 
-            if (tasks.Count == degreeOfParallelism)
+            if (tasks.Count < degreeOfParallelism || degreeOfParallelism < 1)
                 return await Task.WhenAll(tasks).AsEnumerable().ConfigureAwait(false);
 
             var queue = taskFactories
@@ -153,13 +153,13 @@ namespace ParallelTasks
         {
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
-            if (degreeOfParallelism <= 0)
-                degreeOfParallelism = taskFactories.Count();
-
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
+
+            if (degreeOfParallelism < 1)
+                degreeOfParallelism = tasks.Count();
 
             var queue = taskFactories
                 .Skip(degreeOfParallelism)
@@ -182,13 +182,13 @@ namespace ParallelTasks
         {
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
-            if (degreeOfParallelism <= 0)
-                degreeOfParallelism = taskFactories.Count();
-
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
+
+            if (degreeOfParallelism < 1)
+                degreeOfParallelism = tasks.Count();
 
             var queue = taskFactories
                 .Skip(degreeOfParallelism)
@@ -211,13 +211,13 @@ namespace ParallelTasks
         {
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
-            if (degreeOfParallelism <= 0)
-                degreeOfParallelism = taskFactories.Count();
-
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
+
+            if (degreeOfParallelism < 1)
+                degreeOfParallelism = tasks.Count();
 
             var queue = taskFactories
                 .Skip(degreeOfParallelism)
@@ -240,13 +240,13 @@ namespace ParallelTasks
         {
             degreeOfParallelism = ParallelismDebugOptions.AdjustDegreeOfParallelism(degreeOfParallelism);
 
-            if (degreeOfParallelism <= 0)
-                degreeOfParallelism = taskFactories.Count();
-
             var tasks = taskFactories
-                .Take(degreeOfParallelism)
+                .TakeIfPositive(degreeOfParallelism)
                 .Select(t => t.GetTask(cancellationToken))
                 .ToList();
+
+            if (degreeOfParallelism < 1)
+                degreeOfParallelism = tasks.Count();
 
             var queue = taskFactories
                 .Skip(degreeOfParallelism)
@@ -550,6 +550,9 @@ namespace ParallelTasks
         #endregion
 
         #region Private Helpers
+
+        private static IEnumerable<T> TakeIfPositive<T>(this IEnumerable<T> source, int count)
+            => count > 0 ? source.Take(count) : source;
 
         private static Queue<T> ToQueue<T>(this IEnumerable<T> source)
             => new Queue<T>(source);

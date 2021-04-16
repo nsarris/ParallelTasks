@@ -11,6 +11,24 @@ namespace ParallelTasks.Tests
     public class SourcedTasks_WhenEach_Tests
     {
         [Theory]
+        [InlineData(0, 0, true)]
+        [InlineData(100, 0, true)]
+        [InlineData(100, -1, true)]
+        [InlineData(100, 3, true)]
+        [InlineData(1000, 10, false)]
+        public async Task Should_As_Many_Results_As_Source_Items(int itemCount, int degreeOfParallelism, bool simulateTask)
+        {
+            var results = new List<ITaskResult>();
+            await foreach(var result in Enumerable.Range(0, itemCount)
+                .WhenEachAsync(x => TestClass.TestMethod(x, simulateTask: simulateTask), degreeOfParallelism))
+            {
+                results.Add(result);
+            }
+
+            results.Count.Should().Be(itemCount);
+        }
+
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public async Task Should_Complete_As_Expected(bool simulateTask)
