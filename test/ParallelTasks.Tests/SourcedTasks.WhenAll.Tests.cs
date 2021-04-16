@@ -11,6 +11,20 @@ namespace ParallelTasks.Tests
     public class SourcedTasks_WhenAll_Tests
     {
         [Theory]
+        [InlineData(0, 0)]
+        [InlineData(100, 0)]
+        [InlineData(100, -1)]
+        [InlineData(100, 3)]
+        [InlineData(1000, 10)]
+        public async Task Should_As_Many_Results_As_Source_Items(int itemCount, int degreeOfParallelism)
+        {
+            var result = await Enumerable.Range(0, itemCount)
+                .WhenAllAsync(x => TestClass.TestMethod(x, simulateTask: false), degreeOfParallelism);
+
+            result.Count().Should().Be(itemCount);
+        }
+
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public async Task Should_Complete_As_Expected(bool simulateTask)
@@ -26,7 +40,7 @@ namespace ParallelTasks.Tests
             {
                 r.result.ShouldBeCompleted();
                 r.result.ShouldHaveResult(operation(r.sourceValue));
-                r.result.ShouldMatch(null, 0);
+                r.result.ShouldMatch(null, r.index);
                 r.result.ShouldHaveSource(r.sourceValue);
             }
         }
@@ -47,7 +61,7 @@ namespace ParallelTasks.Tests
             {
                 r.result.ShouldBeCompleted();
                 r.result.ShouldHaveResult(operation(r.sourceValue.value));
-                r.result.ShouldMatch(r.sourceValue.name, 0);
+                r.result.ShouldMatch(r.sourceValue.name, r.index);
                 r.result.ShouldHaveSource(r.sourceValue.value);
             }
         }
