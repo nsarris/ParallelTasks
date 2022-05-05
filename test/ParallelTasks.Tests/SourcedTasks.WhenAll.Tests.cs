@@ -80,6 +80,7 @@ namespace ParallelTasks.Tests
                 .WhenAllAsync((ct, x) => Task.Delay(500), token, 1);
 
             Assert.Equal(result.GetCanceled().Count(), total);
+            Assert.True(result.All(x => x.Exception is null));
         }
     }
 }
