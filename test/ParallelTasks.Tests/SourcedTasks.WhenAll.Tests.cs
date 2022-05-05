@@ -36,7 +36,7 @@ namespace ParallelTasks.Tests
             //Get a collection of TaskResults
             var results = await source.WhenAllAsync(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask));
 
-            foreach(var r in source.Zip(results, (sourceValue, result) => new { sourceValue, result }).Select((x,i) => new { x.sourceValue, x.result, index = i }))
+            foreach (var r in source.Zip(results, (sourceValue, result) => new { sourceValue, result }).Select((x, i) => new { x.sourceValue, x.result, index = i }))
             {
                 r.result.ShouldBeCompleted();
                 r.result.ShouldHaveResult(operation(r.sourceValue));
@@ -56,7 +56,7 @@ namespace ParallelTasks.Tests
 
             //Get a collection of TaskResults
             var results = await source.WhenAllAsync(x => TestClass.TestMethod(operation(x), simulateTask: simulateTask));
-            
+
             foreach (var r in source.Zip(results, (sourceValue, result) => new { sourceValue, result }).Select((x, i) => new { x.sourceValue, x.result, index = i }))
             {
                 r.result.ShouldBeCompleted();
@@ -64,6 +64,23 @@ namespace ParallelTasks.Tests
                 r.result.ShouldMatch(r.sourceValue.name, r.index);
                 r.result.ShouldHaveSource(r.sourceValue.value);
             }
+        }
+
+        [Fact]
+        public async Task Should_Complete_As_Cancelled()
+        {
+            var tokenSource = new System.Threading.CancellationTokenSource();
+            var token = tokenSource.Token;
+
+            tokenSource.Cancel();
+
+            var total = 1000;
+
+            var result = await Enumerable.Range(0, total)
+                .WhenAllAsync((ct, x) => Task.Delay(500), token, 1);
+
+            Assert.Equal(result.GetCanceled().Count(), total);
+            Assert.True(result.All(x => x.Exception is null));
         }
     }
 }

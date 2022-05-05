@@ -42,6 +42,11 @@ namespace ParallelTasks
         {
             try
             {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return Task.FromResult(TaskResult.FromCancellation(source, name, index));
+                }
+
                 return
                     (taskFactory?.Invoke(source) ?? taskFactoryWithCancellation.Invoke(source, cancellationToken))
                     .AsTaskResult(source, name, index);

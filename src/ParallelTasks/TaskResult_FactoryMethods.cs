@@ -26,16 +26,16 @@ namespace ParallelTasks
             => new TaskResult<T>(exception, name, index);
 
         public static ITaskResult FromCancellation(string name = null, int? index = null)
-            => new VoidTaskResult(new TaskCanceledException(), name, index);
+            => new VoidTaskResult(TaskResultStatus.Canceled, name, index);
 
         public static ITaskResult<T> FromCancellation<T>(string name = null, int? index = null)
-            => new TaskResult<T>(new TaskCanceledException(), name, index);
+            => new TaskResult<T>(TaskResultStatus.Canceled, name, index);
 
         public static ISourcedTaskResult<TSource, TResult> FromCancellation<TSource, TResult>(TSource source, string name = null, int? index = null)
-            => new TaskResult<TSource, TResult>(source, new TaskCanceledException(), name, index);
+            => new TaskResult<TSource, TResult>(source, TaskResultStatus.Canceled, name, index);
 
         public static ISourcedTaskResult<TSource> FromCancellation<TSource>(TSource source, string name = null, int? index = null)
-            => new VoidTaskResult<TSource>(source, new TaskCanceledException(), name, index);
+            => new VoidTaskResult<TSource>(source, TaskResultStatus.Canceled, name, index);
 
         public static ITaskResult<T> FromTask<T>(Task<T> task, string name = null, int? index = null)
             => new TaskResult<T>(task, name, index);
