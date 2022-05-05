@@ -22,12 +22,12 @@ namespace ParallelTasks
             IsFaulted = Status == TaskResultStatus.Faulted;
         }
 
-        protected TaskResultBase(string name = null, int? index = null)
+        protected TaskResultBase(string name = null, int? index = null, TaskResultStatus status = TaskResultStatus.Completed)
         {
             Name = name;
             Index = index;
 
-            Status = TaskResultStatus.Completed;
+            Status = status;
 
             IsCanceled = Status == TaskResultStatus.Canceled;
             IsCompleted = Status == TaskResultStatus.Completed;
@@ -123,6 +123,12 @@ namespace ParallelTasks
             Value = value;
         }
 
+        internal TaskResult(TaskResultStatus status, string name, int? index = null)
+            :base(name, index, status)
+        {
+            
+        }
+
         internal TaskResult(Exception exception, string name = null, int? index = null) 
             : base(exception, name, index)
         {
@@ -151,6 +157,12 @@ namespace ParallelTasks
         {
         }
 
+        internal VoidTaskResult(TaskResultStatus status, string name, int? index = null)
+            : base(name, index, status)
+        {
+
+        }
+
         internal VoidTaskResult(Exception exception, string name = null, int? index = null) 
             : base(exception, name, index)
         {
@@ -168,6 +180,12 @@ namespace ParallelTasks
 
         public TaskResult(TSource source, TResult value, string name, int? index = null) 
             : base(value, name, index)
+        {
+            Source = source;
+        }
+
+        internal TaskResult(TSource source, TaskResultStatus status, string name, int? index = null)
+            : base(status, name, index)
         {
             Source = source;
         }
@@ -191,6 +209,12 @@ namespace ParallelTasks
 
         public VoidTaskResult(TSource source, string name, int? index) 
             : base(name, index)
+        {
+            Source = source;
+        }
+
+        internal VoidTaskResult(TSource source, TaskResultStatus status, string name, int? index = null)
+            : base(status, name, index)
         {
             Source = source;
         }
